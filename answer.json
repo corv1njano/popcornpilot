@@ -1,0 +1,94 @@
+[
+    {
+        "id": "tt9892936",
+        "description": "In the timeless town of Macondo, seven generations of the Buendía family navigate love, oblivion and the inescapability of their past and their fate.",
+        "name": "Cien años de soledad",
+        "year": 2024,
+        "poster": "https://m.media-amazon.com/images/M/MV5BMjFjNTdiMmQtZjQ5Yi00MWMzLWJjMWMtNmI1ZTgzYmE5NjNiXkEyXkFqcGc@._V1_.jpg",
+        "age": "TV-MA",
+        "rating": 8.4,
+        "trailer": "https://imdb-video.media-imdb.com/vi2141178137/1434659529640-260ouz-1732540893094.mp4?Expires=1740738291&Signature=MoCagG2s4a5Gfte5ymvkiMYm8clD666~-TC-Ne0bMA7zof8KA-DIf7lEn2-elt3f11A9muwjrz2jC5ORCodq71J~o9VgHU89PaphUerhZdgJPN8UxZvDJOHYP9wltFNjx1R20zFPUmoY4uEVFrHe5LZxRk6tfmSHAZP6VcxjJoqlhSdesAXazUokHwTOnaq38Q3iYZHPI9k-ZrgL0IFiFf9DWaeRuOdGay6c4tfYAq187GqQyk0mtlTu9jmLyQyfPq92ZuLyVZvgRBLb4-07xiVpBhKth7D-oSJpwswi8tVVQPchoCkftYOrq1fKuP5kf-PO28974E61Z1kvnBSPaw__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA",
+        "isMovie": "TV Series",
+        "episodes": 8,
+        "runtime": "1 Hr. per episode",
+        "genres": [
+            "Drama",
+            "Fantasy",
+            "History"
+        ]
+    },
+    {
+        "id": "tt2861424",
+        "description": "The fractured domestic lives of a nihilistic mad scientist and his anxious grandson are further complicated by their inter-dimensional misadventures.",
+        "name": "Rick and Morty",
+        "year": 2013,
+        "poster": "https://m.media-amazon.com/images/M/MV5BZGQyZjk2MzMtMTcyNC00NGU3LTlmNjItNDExMWM4ZDFhYmQ2XkEyXkFqcGc@._V1_.jpg",
+        "age": "TV-MA",
+        "rating": 9.1,
+        "trailer": "https://imdb-video.media-imdb.com/vi1423230745/1434659529640-260ouz-1695659135101.mp4?Expires=1740738296&Signature=FkS~osrbYFdUF6f5RdSa-wU8TMvcnrNge5xTflebXhsL1rVmwsUrxC2M1dYJG5EEWi57gWJvrkHKDUFH1WZy6pgt1PWF78jkKh2qQrqJxu6fZmdZiptVHroZdSnS6tyxw3jDSG32lRMgA6jzD75B09VYCXaUk1ChFjM1D4KLHQli1SB8V-BwsjwO9iKWW3RV5BeE5l258fMEXI88B~XCR2YSpg1AhlkmHnt6-DClLuOc9ymb5f054LRZYjwVkDXu82AdEhWO-oli~cQwa3ZIjfShMcZmQu1BVyjC4nN88-oDvggdwA1iO6qH1W6XhmGp77qMBvQCl-P-SaiFvvD4DA__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA",
+        "isMovie": "TV Series",
+        "episodes": 78,
+        "runtime": "23 Min. per episode",
+        "genres": [
+            "Animation",
+            "Adventure",
+            "Comedy",
+            "Sci-Fi"
+        ]
+    },
+    {
+        "id": "tt13872248",
+        "description": "A young couple trying to reunite amid a city ravaged by a plague that turns its victims into deranged, bloodthirsty sadists.",
+        "name": "Ku bei",
+        "year": 2021,
+        "poster": "https://m.media-amazon.com/images/M/MV5BNmU5YzMxMjQtMzI2MC00MjY2LWJkZjMtZTBlYmU3MzZjNThlXkEyXkFqcGc@._V1_.jpg",
+        "age": "TV-MA",
+        "rating": 6.5,
+        "trailer": "https://imdb-video.media-imdb.com/vi1823327001/1434659379400-8cjq25-1632948699438.mp4?Expires=1740738301&Signature=W~ToDI6sWcYdggAWW0DutO5LeFNgpEOgyku3ZiVZ7umeIHod1hkV61QHn6CY4XCzB0Hrr8L7yEM5tBvfUkVVVS9QHkDJKO-7wGeaFNPsBtaAXpp43IL-yyw186SnOK2FckxxnrwCWd0A6B4PmHzDRSsjnMkzArjg0wgxiXGO1topAq67skL~EnB4WS2EvjzMWsNj2ONWt3hAXqXcpGJVI4LqtT91H8o11Y2eEvoRrB~zBOi6SNoXhUDkah~351QI6ibMJHvaAhMbFfMSAIXrnw~3ZLn~OffXNp4wRaE1pTUXK-RXdqdDLTy3worKFOOcVxH9huTKdtqdv77zAWbajQ__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA",
+        "isMovie": "Movie",
+        "episodes": null,
+        "runtime": "1 Hr. 39 Min.",
+        "genres": [
+            "Horror"
+        ]
+    },
+    {
+        "id": "tt21209876",
+        "description": "Follows the adventures of Sung Jinwoo in a world that is constantly threatened by monsters and evil forces. In his battles Sung transforms himself from the weakest hunter of all mankind to one of the strongest hunters in existence.",
+        "name": "Ore dake Level Up na Ken",
+        "year": 2024,
+        "poster": "https://m.media-amazon.com/images/M/MV5BM2M4YzdkMTEtMjUyYy00ZWY0LWI5ODQtNGRkZWQ1MzU5MWM2XkEyXkFqcGc@._V1_.jpg",
+        "age": "TV-MA",
+        "rating": 8.4,
+        "trailer": "https://imdb-video.media-imdb.com/vi3536439577/1434659607842-pgv4ql-1734965852791.mp4?Expires=1740738305&Signature=g-s274xq8E4sgFI3zJOrIIShPn0o4yCzBGKJp7o1Co2MuNtjv66KqarxZKEs-heRwAaCK5uLq6mhv64ntNsU0~eR5lm9WPRi4yZzrGezPFo2STZ72unAJIq7OHW615kn-clE27fpOZHlE-usN04GWP1HozRRf6nU-hZDkyZfBVeFhzXHgN49E-4-GZM~a4qM1ggpyvlMHQRk67tAevHBe2Th4SjfDvGAfzR3kPojVMsquS8j0FQjjZjXVYI9SMJyhzlOC8NPgIZS6bsjo7badWXIPepsr4PhvOsig~0kLfl1cgcPIuVjF3xq0ewGvM-Xt1YVHnrQKYkHdeVmovmzlA__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA",
+        "isMovie": "TV Series",
+        "episodes": 22,
+        "runtime": "Unknown duration per episode",
+        "genres": [
+            "Animation",
+            "Action",
+            "Adventure",
+            "Fantasy"
+        ]
+    },
+    {
+        "id": "tt2085059",
+        "description": "Featuring stand-alone dramas -- sharp, suspenseful, satirical tales that explore techno-paranoia -- \"Black Mirror\" is a contemporary reworking of \"The Twilight Zone\" with stories that tap into the collective unease about the modern world.",
+        "name": "Black Mirror",
+        "year": 2011,
+        "poster": "https://m.media-amazon.com/images/M/MV5BMWY3ZjgwMTctZTZmMS00ZTMwLTkwYWEtNTVkMDgwNjA5ODBiXkEyXkFqcGc@._V1_.jpg",
+        "age": "TV-MA",
+        "rating": 8.7,
+        "trailer": "https://imdb-video.media-imdb.com/vi3745760281/1434659529640-260ouz-1685542576769.mp4?Expires=1740738310&Signature=NGMfxyUdZIlUr2f1qnlWUayRfxThuFvLByIhZcNRzAvKCYrmv3MxxkEhvhUYDvcuA9aOHgC4pAmsmO-ulauS4tHfmkn8ZBSn8sjMU~HKJy9YS-hEEPuYuIzAuGXsHMPbvBr35x6zNoxvUJFArXx~3ICUtTKbtsUPL730Ai9wiJ0GUk3cG6AGKKSA9o6T4LpX0b4QIWPdlU~h06yD6nrwce2C0Y-A0HTzQvFUPDgCTVyrBjgsLShSmCah8B-4I1nfzEmF17JmGDFXm90h-RLeOmS2GGcAnWoKn8KZD4MZKe7HwIkcEmIszCvqpaeeXILyUPrdmK~MJnQzp-45F7jdMA__&Key-Pair-Id=APKAIFLZBVQZ24NQH3KA",
+        "isMovie": "TV Series",
+        "episodes": 33,
+        "runtime": "1 Hr. per episode",
+        "genres": [
+            "Crime",
+            "Drama",
+            "Mystery",
+            "Sci-Fi",
+            "Thriller"
+        ]
+    }
+]
