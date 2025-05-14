@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PopcornPilo</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='PopcornPilot.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='PopcornPilot.png') }}" alt="PopcornPilot Logo" class="logo">
+        </div>
+        <h1>PopcornPilot</h1>
+
+        <div class="search-container">
+            <button id="homeButton" onclick="resetPage()">Reset</button>
+            <input type="text" id="searchInput" placeholder="Waiting for voice input...">
+        </div>
+
+        <div class="button-container">
+            <button id="filterButton">⚙️ Filter</button>
+            <button id="randomButton">🎲 Random</button>
+            <button id="micButton">🎤 Voice input</button>
+            <div id="micIndicator" class="mic-indicator"></div>
+        </div>
+
+        <div class="loader-container" id="loaderContainer">
+            <div class="loader"></div>
+        </div>
+
+        <div class="genre-filters">
+            <p>Select Genre:</p>
+            <div class="genre-checkboxes">
+                <label><input type="checkbox" name="genre" value="Action">Action</label>
+                <label><input type="checkbox" name="genre" value="Adventure"> Adventure</label>
+                <label><input type="checkbox" name="genre" value="Animation"> Animation</label>
+                <label><input type="checkbox" name="genre" value="Adult"> Adult</label>
+                <label><input type="checkbox" name="genre" value="Biography"> Biography</label>
+                <label><input type="checkbox" name="genre" value="Comedy"> Comedy</label>
+                <label><input type="checkbox" name="genre" value="Crime"> Crime</label>
+                <label><input type="checkbox" name="genre" value="Documentary"> Documentary</label>
+                <label><input type="checkbox" name="genre" value="Drama"> Drama</label>
+                <label><input type="checkbox" name="genre" value="Family"> Family</label>
+                <label><input type="checkbox" name="genre" value="Fantasy"> Fantasy</label>
+                <label><input type="checkbox" name="genre" value="Film-Noir"> Film-Noir</label>
+                <label><input type="checkbox" name="genre" value="Game-Show"> Game-Show</label>
+                <label><input type="checkbox" name="genre" value="History"> History</label>
+                <label><input type="checkbox" name="genre" value="Horror"> Horror</label>
+                <label><input type="checkbox" name="genre" value="Music"> Music</label>
+                <label><input type="checkbox" name="genre" value="Musical"> Musical</label>
+                <label><input type="checkbox" name="genre" value="Mystery"> Mystery</label>
+                <label><input type="checkbox" name="genre" value="News"> News</label>
+                <label><input type="checkbox" name="genre" value="Reality-TV"> Reality-TV</label>
+                <label><input type="checkbox" name="genre" value="Romance"> Romance</label>
+                <label><input type="checkbox" name="genre" value="Sci-Fi"> Sci-Fi</label>
+                <label><input type="checkbox" name="genre" value="Short"> Short</label>
+                <label><input type="checkbox" name="genre" value="Sport"> Sport</label>
+                <label><input type="checkbox" name="genre" value="Talk-Show"> Talk-Show</label>
+                <label><input type="checkbox" name="genre" value="Thriller"> Thriller</label>
+                <label><input type="checkbox" name="genre" value="War"> War</label>
+                <label><input type="checkbox" name="genre" value="Western"> Western</label>
+            </div>
+        </div>
+
+        <select id="yearFilter">
+            <option value="">Select year</option>
+        </select>
+
+        <div id="results" class="results"></div>
+    </div>
+
+    <!-- Popup Fenster für Film-Details -->
+    <div id="popup" class="popup">
+        <span class="popup-close" onclick="closePopup()">✖</span>
+        <div class="popup-content">
+            <img id="popup-poster" src="" alt="Poster">
+            <div class="popup-info">
+                <h2 id="popup-title"></h2>
+                <p id="popup-description"></p>
+                <p><strong>Year:</strong> <span id="popup-year"></span></p>
+                <p><strong>Age Rating:</strong> <span id="popup-age"></span></p>
+                <p><strong>Rating:</strong> ⭐ <span id="popup-rating"> / 10</span></p>
+                <p><strong>Duration:</strong> <span id="popup-runtime"></span></p>
+                <p><strong>Genres:</strong> <span id="popup-genres"></span></p>
+            </div>
+        </div>
+        <video id="popup-trailer" autoplay loop muted playsinline>
+            <source id="popup-video" src="" type="video/mp4">
+            Dein Browser unterstützt keine Video-Wiedergabe.
+        </video>
+        <button id="toggle-sound" onclick="toggleSound()">🔊 Ton ein</button>
+    </div>
+
+    <script>
+        const loaderContainer = document.getElementById("loaderContainer");
+        const micButton = document.getElementById("micButton");
+        const micIndicator = document.getElementById("micIndicator");
+        const searchInput = document.getElementById("searchInput");
+        const randomButton = document.getElementById("randomButton");
+        const resultsDiv = document.getElementById("results");
+        const popup = document.getElementById("popup");
+        const popupVideo = document.getElementById("popup-trailer");
+        const popupVideoSource = document.getElementById("popup-video");
+        const toggleSoundButton = document.getElementById("toggle-sound");
+
+        function showLoader() {
+            loaderContainer.style.display = "flex";
+        }
+
+        function hideLoader() {
+            loaderContainer.style.display = "none";
+        }
+
+        // Sprachaufnahme mit Web Speech API
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = "de-DE";
+        recognition.interimResults = false;
+        recognition.continuous = false;
+
+        micButton.addEventListener("click", () => {
+            micIndicator.style.display = "block";
+            recognition.start();
+        });
+
+        recognition.onresult = (event) => {
+            let speechText = event.results[0][0].transcript.trim().replace(/\.$/, "");
+            searchInput.value = speechText;
+
+            showLoader();
+
+            fetch("/speech_input", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ speech: speechText })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.query) {
+                        searchMovies(data.query);
+                    }
+                });
+
+            micIndicator.style.display = "none";
+        };
+
+        function searchMovies(query) {
+            // Setze alle Filter zurück
+            document.querySelectorAll('input[name="genre"]').forEach(checkbox => checkbox.checked = false);
+            document.getElementById("yearFilter").value = "";
+
+            // Setze das Suchfeld zurück
+            document.getElementById("searchInput").value = query;
+
+            // Lösche vorherige Suchergebnisse
+            resultsDiv.innerHTML = "";
+
+            showLoader();
+
+            fetch(`/search?q=${query}`)
+                .then(response => response.json())
+                .then(results => {
+                    resultsDiv.innerHTML = "";
+
+                    if (results.length === 0) {
+                        resultsDiv.innerHTML = "<p>Kein Treffer gefunden.</p>";
+                    } else {
+                        results.forEach(movie => {
+                            let div = document.createElement("div");
+                            div.className = "movie-card";
+                            div.innerHTML = `
+                        <img src="${movie.poster}" alt="${movie.name}">
+                        <h3>${movie.name} (${movie.year})</h3>
+                    `;
+                            div.addEventListener("click", () => openPopup(movie));
+                            resultsDiv.appendChild(div);
+                        });
+                    }
+
+                    displayResults(results);
+                    hideLoader();
+                });
+        }
+
+
+        function openPopup(movie) {
+            document.getElementById("popup-title").innerText = movie.name;
+            document.getElementById("popup-description").innerText = movie.description;
+            document.getElementById("popup-year").innerText = movie.year;
+            document.getElementById("popup-age").innerText = movie.age;
+            document.getElementById("popup-rating").innerText = movie.rating;
+            document.getElementById("popup-runtime").innerText = movie.runtime;
+            document.getElementById("popup-genres").innerText = movie.genres.join(", ");
+            document.getElementById("popup-poster").src = movie.poster;
+
+            // Setzt die Video-Quelle neu, um ein richtiges Laden zu erzwingen
+            popupVideoSource.src = movie.trailer;
+            popupVideo.load();
+            popupVideo.play();
+
+            // Stellt sicher, dass das Video zunächst stummgeschaltet startet
+            popupVideo.muted = true;
+            toggleSoundButton.innerText = "🔊 Ton ein";
+
+            popup.style.display = "flex";
+        }
+
+        function closePopup() {
+            popup.style.display = "none";
+            popupVideo.pause();
+        }
+
+        function toggleSound() {
+            if (popupVideo.muted) {
+                popupVideo.muted = false;
+                toggleSoundButton.innerText = "🔇 Ton aus";
+            } else {
+                popupVideo.muted = true;
+                toggleSoundButton.innerText = "🔊 Ton ein";
+            }
+        }
+
+        randomButton.addEventListener("click", () => {
+            showLoader();
+
+            fetch("/random_movies")
+                .then(response => response.json())
+                .then(results => {
+                    resultsDiv.innerHTML = "";
+
+                    if (results.length === 0) {
+                        resultsDiv.innerHTML = "<p>Keine zufälligen Filme gefunden.</p>";
+                    } else {
+                        results.forEach(movie => {
+                            let div = document.createElement("div");
+                            div.className = "movie-card";
+                            div.innerHTML = `
+                                <img src="${movie.poster}" alt="${movie.name}">
+                                <h3>${movie.name} (${movie.year})</h3>
+                            `;
+                            div.addEventListener("click", () => openPopup(movie));
+                            resultsDiv.appendChild(div);
+                        });
+                    }
+
+                    displayResults(results);
+                    hideLoader();
+                });
+        });
+
+
+        // Funktion zum Befüllen des Jahr-Dropdowns (1900 - aktuelles Jahr)
+        function populateYearFilter() {
+            const yearFilter = document.getElementById("yearFilter");
+            yearFilter.innerHTML = '<option value="">Select year</option>'; // Standardoption
+
+            const currentYear = new Date().getFullYear();
+            for (let year = currentYear; year >= 1895; year--) {
+                let option = document.createElement("option");
+                option.value = year;
+                option.textContent = year;
+                yearFilter.appendChild(option);
+            }
+        }
+
+        // Funktion zum Filtern der Filme nach Genre & Jahr
+        document.getElementById("filterButton").addEventListener("click", () => {
+            const selectedGenres = Array.from(document.querySelectorAll('input[name="genre"]:checked')).map(el => el.value);
+            const selectedYear = document.getElementById("yearFilter").value;
+
+            // Falls kein Genre und kein Jahr gewählt wurde, alle Filme anzeigen
+            if (selectedGenres.length === 0 && selectedYear === "") {
+                fetch("/filter")
+                    .then(response => response.json())
+                    .then(results => displayResults(results));
+                return;
+            }
+
+            // Falls keine Genres gewählt sind, wird der Genre-Filter ignoriert
+            const genreQuery = selectedGenres.length > 0 ? selectedGenres.map(genre => `genre=${encodeURIComponent(genre)}`).join("&") : "";
+
+            // Falls kein Jahr gewählt wurde, wird der Jahres-Filter ignoriert
+            const yearQuery = selectedYear && selectedYear !== "" ? `year=${encodeURIComponent(selectedYear)}` : "";
+
+            // Nur Parameter in die URL einfügen, die nicht leer sind
+            const queryString = [genreQuery, yearQuery].filter(q => q).join("&");
+
+            fetch(`/filter?${queryString}`)
+                .then(response => response.json())
+                .then(results => displayResults(results));
+        });
+
+
+        // Funktion zur Anzeige der gefilterten Ergebnisse
+        function displayResults(results) {
+            const resultsDiv = document.getElementById("results");
+            const genreFilters = document.querySelector(".genre-filters");
+            const yearFilter = document.getElementById("yearFilter");
+
+            resultsDiv.innerHTML = "";
+
+            if (results.length === 0) {
+                resultsDiv.innerHTML = "<p>Keine Treffer gefunden.</p>";
+            } else {
+                results.forEach(movie => {
+                    let div = document.createElement("div");
+                    div.className = "movie-card";
+                    div.innerHTML = `
+                <img src="${movie.poster}" alt="${movie.name}">
+                <h3>${movie.name} (${movie.year})</h3>
+            `;
+                    div.addEventListener("click", () => openPopup(movie));
+                    resultsDiv.appendChild(div);
+                });
+            }
+
+            // Stellt sicher, dass die Filter immer sichtbar sind
+            genreFilters.style.display = "flex";
+            yearFilter.style.display = "block";
+        }
+
+
+
+        function resetPage() {
+            // Setze alle Filter zurück
+            document.querySelectorAll('input[name="genre"]').forEach(checkbox => checkbox.checked = false);
+            document.getElementById("yearFilter").value = "";
+
+            // Setze das Suchfeld zurück
+            document.getElementById("searchInput").value = "";
+
+            // Lösche vorherige Suchergebnisse
+            document.getElementById("results").innerHTML = "";
+
+            // Verstecke Filter (optional)
+            document.querySelector(".genre-filters").style.display = "none";
+            document.getElementById("yearFilter").style.display = "none";
+
+            // Sprachsuche stoppen, falls aktiv
+            if (recognition) {
+                recognition.stop();
+            }
+
+            // Mikrofon-Indikator immer ausblenden, unabhängig vom Status der Sprachsuche
+            micIndicator.style.display = "none";
+        }
+
+
+
+
+        // Lade die Jahre, wenn die Seite geladen wird
+        document.addEventListener("DOMContentLoaded", populateYearFilter);
+
+
+    </script>
+</body>
+
+</html>
